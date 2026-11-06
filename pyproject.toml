@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mnemosyne"
+version = "0.1.0"
+description = "Personal library knowledge base: sources, passages, draft claims, human review gates"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Mnemosyne contributors" }]
+keywords = ["knowledge-base", "postgres", "ingest", "review", "library"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Database",
+]
+dependencies = [
+  "psycopg[binary]>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.8.0",
+]
+
+[project.scripts]
+mnemosyne = "mnemosyne.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/wilfullyapt/mnemosyne"
+Repository = "https://github.com/wilfullyapt/mnemosyne"
+Issues = "https://github.com/wilfullyapt/mnemosyne/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mnemosyne"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"migrations" = "mnemosyne/migrations"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
